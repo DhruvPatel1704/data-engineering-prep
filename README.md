@@ -7,13 +7,14 @@ Documenting my end-to-end Data Engineering learning journey — SQL, Python, Doc
 | Folder | Topics Covered |
 |--------|---------------|
 | `SQL PROBLEM SOLVING/` | SELECT, WHERE, GROUP BY, HAVING, all JOIN types, window functions, CTEs, subqueries, query optimization |
+| `SQL PROBLEM SOLVING/brazilian_ecommerce_analytics.sql` | 10 business queries on real 500k+ row Olist dataset — revenue trends, delivery SLA, retention analysis, ROLLUP reporting |
 | `python-data-practice/` | Pandas, NumPy, OOP pipeline patterns, testing, data cleaning, Polars |
 | `docker-practice/` | Dockerfiles, multi-stage builds, Docker Compose, networking *(coming Week 3)* |
 | `airflow-practice/` | DAGs, operators, task dependencies, scheduling *(coming Week 3)* |
 
 ## LeetCode Progress
 
-120+ SQL problems solved (medium + hard difficulty) with approach and key insight documented in every solution. Focus on patterns used in production pipelines — CTEs, window functions, recursive queries, spine generation.
+150+ SQL and Python problems solved (medium + hard difficulty) with approach and key insight documented in every solution. Focus on patterns used in production pipelines — CTEs, window functions, recursive queries, spine generation, backtracking, dynamic programming.
 
 ## Tech Stack
 
@@ -21,6 +22,7 @@ Documenting my end-to-end Data Engineering learning journey — SQL, Python, Doc
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white)
+![DBeaver](https://img.shields.io/badge/DBeaver-382923?style=flat&logo=dbeaver&logoColor=white)
 
 ## How I Practice
 
