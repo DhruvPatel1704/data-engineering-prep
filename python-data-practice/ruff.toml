@@ -1,0 +1,9 @@
+line-length = 88
+indent-width = 4
+
+[lint.per-file-ignores]
+"day*.py" = ["E402", "F821", "E501"]
+
+[format]
+quote-style = "double"
+indent-style = "space"

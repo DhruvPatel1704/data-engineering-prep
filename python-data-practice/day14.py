@@ -4,6 +4,7 @@
 # check if complement (target - num) already seen
 # Key insight: one pass, O(n) time vs O(n²) brute force
 
+
 def two_sum(nums, target):
     seen = {}
     for i, num in enumerate(nums):
@@ -13,9 +14,10 @@ def two_sum(nums, target):
         seen[num] = i
     return []
 
+
 # test
-print(two_sum([2, 7, 11, 15], 9))   # [0, 1]
-print(two_sum([3, 2, 4], 6))        # [1, 2]
+print(two_sum([2, 7, 11, 15], 9))  # [0, 1]
+print(two_sum([3, 2, 4], 6))  # [1, 2]
 
 
 # Problem 2: Valid Anagram (LC #242)
@@ -26,18 +28,21 @@ print(two_sum([3, 2, 4], 6))        # [1, 2]
 
 from collections import Counter
 
+
 def is_anagram(s, t):
     return Counter(s) == Counter(t)
 
+
 # test
 print(is_anagram("anagram", "nagaram"))  # True
-print(is_anagram("rat", "car"))          # False
+print(is_anagram("rat", "car"))  # False
 
 
 # Problem 3: Contains Duplicate (LC #217)
 # Difficulty: Easy
 # Approach: set lookup is O(1), add each element and check if seen
 # Key insight: len(set) vs len(list) is cleaner but less explicit
+
 
 def contains_duplicate(nums):
     seen = set()
@@ -47,9 +52,10 @@ def contains_duplicate(nums):
         seen.add(num)
     return False
 
+
 # test
-print(contains_duplicate([1, 2, 3, 1]))     # True
-print(contains_duplicate([1, 2, 3, 4]))     # False
+print(contains_duplicate([1, 2, 3, 1]))  # True
+print(contains_duplicate([1, 2, 3, 4]))  # False
 
 
 # Problem 4: Best Time to Buy and Sell Stock (LC #121)
@@ -57,8 +63,9 @@ print(contains_duplicate([1, 2, 3, 4]))     # False
 # Approach: track minimum price seen so far, compute profit at each step
 # Key insight: one pass — no need for nested loops
 
+
 def max_profit(prices):
-    min_price = float('inf')
+    min_price = float("inf")
     max_profit_val = 0
     for price in prices:
         if price < min_price:
@@ -67,9 +74,10 @@ def max_profit(prices):
             max_profit_val = price - min_price
     return max_profit_val
 
+
 # test
 print(max_profit([7, 1, 5, 3, 6, 4]))  # 5
-print(max_profit([7, 6, 4, 3, 1]))     # 0
+print(max_profit([7, 6, 4, 3, 1]))  # 0
 
 
 # Problem 5: Valid Parentheses (LC #20)
@@ -77,22 +85,24 @@ print(max_profit([7, 6, 4, 3, 1]))     # 0
 # Approach: stack — push open brackets, pop and match on close
 # Key insight: stack naturally handles nesting order
 
+
 def is_valid(s):
     stack = []
-    mapping = {')': '(', '}': '{', ']': '['}
+    mapping = {")": "(", "}": "{", "]": "["}
     for char in s:
         if char in mapping:
-            top = stack.pop() if stack else '#'
+            top = stack.pop() if stack else "#"
             if mapping[char] != top:
                 return False
         else:
             stack.append(char)
     return not stack
 
+
 # test
-print(is_valid("()[]{}"))   # True
-print(is_valid("(]"))       # False
-print(is_valid("{[]}"))     # True
+print(is_valid("()[]{}"))  # True
+print(is_valid("(]"))  # False
+print(is_valid("{[]}"))  # True
 
 
 # Problem 6: Maximum Subarray (LC #53)
@@ -100,6 +110,7 @@ print(is_valid("{[]}"))     # True
 # Approach: Kadane's algorithm — track current sum and max sum
 # reset current sum to 0 when it goes negative
 # Key insight: O(n) single pass, classic DE interview question
+
 
 def max_subarray(nums):
     max_sum = nums[0]
@@ -109,10 +120,11 @@ def max_subarray(nums):
         max_sum = max(max_sum, current_sum)
     return max_sum
 
+
 # test
 print(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))  # 6
-print(max_subarray([1]))                                 # 1
-print(max_subarray([5, 4, -1, 7, 8]))                   # 23
+print(max_subarray([1]))  # 1
+print(max_subarray([5, 4, -1, 7, 8]))  # 23
 
 
 # Problem 7: Group Anagrams (LC #49)
@@ -122,6 +134,7 @@ print(max_subarray([5, 4, -1, 7, 8]))                   # 23
 
 from collections import defaultdict
 
+
 def group_anagrams(strs):
     groups = defaultdict(list)
     for word in strs:
@@ -129,8 +142,9 @@ def group_anagrams(strs):
         groups[key].append(word)
     return list(groups.values())
 
+
 # test
-print(group_anagrams(["eat","tea","tan","ate","nat","bat"]))
+print(group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
 # [['eat','tea','ate'], ['tan','nat'], ['bat']]
 
 
@@ -139,6 +153,7 @@ print(group_anagrams(["eat","tea","tan","ate","nat","bat"]))
 # Approach: prefix product left pass, suffix product right pass
 # multiply both arrays to get result without division
 # Key insight: O(n) without using division — classic interview trick
+
 
 def product_except_self(nums):
     n = len(nums)
@@ -153,8 +168,9 @@ def product_except_self(nums):
         suffix *= nums[i]
     return result
 
+
 # test
-print(product_except_self([1, 2, 3, 4]))   # [24, 12, 8, 6]
+print(product_except_self([1, 2, 3, 4]))  # [24, 12, 8, 6]
 print(product_except_self([-1, 1, 0, -3, 3]))  # [0, 0, 9, 0, 0]
 
 
@@ -163,6 +179,7 @@ print(product_except_self([-1, 1, 0, -3, 3]))  # [0, 0, 9, 0, 0]
 # Approach: convert to set, only start counting from sequence start
 # sequence start = num where num-1 is NOT in set
 # Key insight: O(n) because each number is visited at most twice
+
 
 def longest_consecutive(nums):
     num_set = set(nums)
@@ -177,6 +194,7 @@ def longest_consecutive(nums):
             longest = max(longest, streak)
     return longest
 
+
 # test
 print(longest_consecutive([100, 4, 200, 1, 3, 2]))  # 4
 print(longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))  # 9
@@ -187,6 +205,7 @@ print(longest_consecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))  # 9
 # Approach: count frequencies, use bucket sort by frequency
 # bucket index = frequency, each bucket holds list of nums
 # Key insight: bucket sort gives O(n) vs O(n log n) heap approach
+
 
 def top_k_frequent(nums, k):
     count = Counter(nums)
@@ -201,6 +220,7 @@ def top_k_frequent(nums, k):
                 return result
     return result
 
+
 # test
 print(top_k_frequent([1, 1, 1, 2, 2, 3], 2))  # [1, 2]
-print(top_k_frequent([1], 1))                   # [1]
+print(top_k_frequent([1], 1))  # [1]

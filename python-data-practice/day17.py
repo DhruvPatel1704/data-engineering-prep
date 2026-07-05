@@ -4,25 +4,28 @@
 # every node must be strictly within its valid range
 # Key insight: bounds narrow as we go deeper — left gets upper bound, right gets lower
 
-def is_valid_bst(root, min_val=float('-inf'), max_val=float('inf')):
+
+def is_valid_bst(root, min_val=float("-inf"), max_val=float("inf")):
     if not root:
         return True
     if root.val <= min_val or root.val >= max_val:
         return False
-    return (is_valid_bst(root.left, min_val, root.val) and
-            is_valid_bst(root.right, root.val, max_val))
+    return is_valid_bst(root.left, min_val, root.val) and is_valid_bst(
+        root.right, root.val, max_val
+    )
+
 
 root = TreeNode(2)
 root.left = TreeNode(1)
 root.right = TreeNode(3)
-print(is_valid_bst(root))   # True
+print(is_valid_bst(root))  # True
 
 invalid = TreeNode(5)
 invalid.left = TreeNode(1)
 invalid.right = TreeNode(4)
 invalid.right.left = TreeNode(3)
 invalid.right.right = TreeNode(6)
-print(is_valid_bst(invalid))   # False
+print(is_valid_bst(invalid))  # False
 
 
 # Problem 2: Level Order Traversal (LC #102)
@@ -32,6 +35,7 @@ print(is_valid_bst(invalid))   # False
 # Key insight: len(queue) at start of each iteration = current level size
 
 from collections import deque
+
 
 def level_order(root):
     if not root:
@@ -51,18 +55,20 @@ def level_order(root):
         result.append(level)
     return result
 
+
 root = TreeNode(3)
 root.left = TreeNode(9)
 root.right = TreeNode(20)
 root.right.left = TreeNode(15)
 root.right.right = TreeNode(7)
-print(level_order(root))   # [[3], [9, 20], [15, 7]]
+print(level_order(root))  # [[3], [9, 20], [15, 7]]
 
 
 # Problem 3: Binary Tree Right Side View (LC #199)
 # Difficulty: Medium
 # Approach: BFS level order, take the last element of each level
 # Key insight: rightmost node at each level is the last one processed
+
 
 def right_side_view(root):
     if not root:
@@ -81,12 +87,13 @@ def right_side_view(root):
                 queue.append(node.right)
     return result
 
+
 root = TreeNode(1)
 root.left = TreeNode(2)
 root.right = TreeNode(3)
 root.left.right = TreeNode(5)
 root.right.right = TreeNode(4)
-print(right_side_view(root))   # [1, 3, 4]
+print(right_side_view(root))  # [1, 3, 4]
 
 
 # Problem 4: Lowest Common Ancestor of BST (LC #235)
@@ -94,6 +101,7 @@ print(right_side_view(root))   # [1, 3, 4]
 # Approach: use BST property — if both nodes smaller go left, both larger go right
 # when they diverge or one equals root, that is the LCA
 # Key insight: no need to traverse whole tree — BST property guides direction
+
 
 def lowest_common_ancestor(root, p, q):
     while root:
@@ -105,13 +113,14 @@ def lowest_common_ancestor(root, p, q):
             return root
     return None
 
+
 root = TreeNode(6)
 root.left = TreeNode(2)
 root.right = TreeNode(8)
 root.left.left = TreeNode(0)
 root.left.right = TreeNode(4)
 p, q = TreeNode(2), TreeNode(8)
-print(lowest_common_ancestor(root, p, q).val)   # 6
+print(lowest_common_ancestor(root, p, q).val)  # 6
 
 
 # Problem 5: Number of Islands (LC #200)
@@ -120,6 +129,7 @@ print(lowest_common_ancestor(root, p, q).val)   # 6
 # count each flood fill as one island
 # Key insight: modifying grid in place avoids visited set
 
+
 def num_islands(grid):
     if not grid:
         return 0
@@ -127,9 +137,9 @@ def num_islands(grid):
     count = 0
 
     def dfs(r, c):
-        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] == '0':
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] == "0":
             return
-        grid[r][c] = '0'   # mark visited by sinking the land
+        grid[r][c] = "0"  # mark visited by sinking the land
         dfs(r + 1, c)
         dfs(r - 1, c)
         dfs(r, c + 1)
@@ -137,16 +147,27 @@ def num_islands(grid):
 
     for r in range(rows):
         for c in range(cols):
-            if grid[r][c] == '1':
+            if grid[r][c] == "1":
                 dfs(r, c)
                 count += 1
     return count
 
-grid1 = [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]
-print(num_islands(grid1))   # 1
 
-grid2 = [["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]
-print(num_islands(grid2))   # 3
+grid1 = [
+    ["1", "1", "1", "1", "0"],
+    ["1", "1", "0", "1", "0"],
+    ["1", "1", "0", "0", "0"],
+    ["0", "0", "0", "0", "0"],
+]
+print(num_islands(grid1))  # 1
+
+grid2 = [
+    ["1", "1", "0", "0", "0"],
+    ["1", "1", "0", "0", "0"],
+    ["0", "0", "1", "0", "0"],
+    ["0", "0", "0", "1", "1"],
+]
+print(num_islands(grid2))  # 3
 
 
 # Problem 6: Clone Graph (LC #133)
@@ -155,10 +176,12 @@ print(num_islands(grid2))   # 3
 # visit each node once, create clone, recursively clone neighbors
 # Key insight: hashmap prevents infinite loops and duplicate cloning
 
+
 class GraphNode:
     def __init__(self, val=0, neighbors=None):
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
+
 
 def clone_graph(node):
     if not node:
@@ -183,18 +206,19 @@ def clone_graph(node):
 # 0 = unvisited, 1 = visiting (in current path), 2 = visited (safe)
 # Key insight: if we reach a node currently being visited, cycle exists
 
+
 def can_finish(num_courses, prerequisites):
     graph = [[] for _ in range(num_courses)]
     for course, prereq in prerequisites:
         graph[prereq].append(course)
 
-    state = [0] * num_courses   # 0=unvisited 1=visiting 2=done
+    state = [0] * num_courses  # 0=unvisited 1=visiting 2=done
 
     def dfs(node):
         if state[node] == 1:
-            return False   # cycle detected
+            return False  # cycle detected
         if state[node] == 2:
-            return True    # already verified safe
+            return True  # already verified safe
         state[node] = 1
         for neighbor in graph[node]:
             if not dfs(neighbor):
@@ -204,8 +228,9 @@ def can_finish(num_courses, prerequisites):
 
     return all(dfs(i) for i in range(num_courses))
 
-print(can_finish(2, [[1, 0]]))          # True
-print(can_finish(2, [[1, 0], [0, 1]])) # False (cycle)
+
+print(can_finish(2, [[1, 0]]))  # True
+print(can_finish(2, [[1, 0], [0, 1]]))  # False (cycle)
 
 
 # Problem 8: Pacific Atlantic Water Flow (LC #417)
@@ -213,6 +238,7 @@ print(can_finish(2, [[1, 0], [0, 1]])) # False (cycle)
 # Approach: reverse DFS from both oceans — find cells that can reach each ocean
 # answer is intersection of both reachable sets
 # Key insight: reverse direction — instead of water flowing down, flow UP from ocean
+
 
 def pacific_atlantic(heights):
     rows, cols = len(heights), len(heights[0])
@@ -225,7 +251,7 @@ def pacific_atlantic(heights):
         if heights[r][c] < prev_height:
             return
         visited.add((r, c))
-        for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
+        for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
             dfs(r + dr, c + dc, visited, heights[r][c])
 
     for r in range(rows):
@@ -237,13 +263,27 @@ def pacific_atlantic(heights):
 
     return list(pacific & atlantic)
 
-print(len(pacific_atlantic([[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]])))   # 7
+
+print(
+    len(
+        pacific_atlantic(
+            [
+                [1, 2, 2, 3, 5],
+                [3, 2, 3, 4, 4],
+                [2, 4, 5, 3, 1],
+                [6, 7, 1, 4, 5],
+                [5, 1, 1, 2, 4],
+            ]
+        )
+    )
+)  # 7
 
 
 # Problem 9: Word Search (LC #79)
 # Difficulty: Medium
 # Approach: backtracking DFS from each cell — mark visited, explore, unmark
 # Key insight: in-place marking avoids visited set, unmark on backtrack
+
 
 def exist(board, word):
     rows, cols = len(board), len(board[0])
@@ -256,9 +296,13 @@ def exist(board, word):
         if board[r][c] != word[idx]:
             return False
         temp = board[r][c]
-        board[r][c] = '#'   # mark visited
-        found = (dfs(r+1,c,idx+1) or dfs(r-1,c,idx+1) or
-                 dfs(r,c+1,idx+1) or dfs(r,c-1,idx+1))
+        board[r][c] = "#"  # mark visited
+        found = (
+            dfs(r + 1, c, idx + 1)
+            or dfs(r - 1, c, idx + 1)
+            or dfs(r, c + 1, idx + 1)
+            or dfs(r, c - 1, idx + 1)
+        )
         board[r][c] = temp  # unmark on backtrack
         return found
 
@@ -268,16 +312,18 @@ def exist(board, word):
                 return True
     return False
 
-board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
-print(exist(board, "ABCCED"))   # True
-print(exist(board, "SEE"))      # True
-print(exist(board, "ABCB"))     # False
+
+board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
+print(exist(board, "ABCCED"))  # True
+print(exist(board, "SEE"))  # True
+print(exist(board, "ABCB"))  # False
 
 
 # Problem 10: Subsets (LC #78)
 # Difficulty: Medium
 # Approach: backtracking — at each step choose to include or exclude element
 # Key insight: add current subset at every recursive call, not just at leaf
+
 
 def subsets(nums):
     result = []
@@ -292,6 +338,7 @@ def subsets(nums):
     backtrack(0, [])
     return result
 
+
 print(subsets([1, 2, 3]))
 # [[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]
 
@@ -300,6 +347,7 @@ print(subsets([1, 2, 3]))
 # Difficulty: Medium
 # Approach: backtracking — can reuse same element, subtract from target
 # Key insight: allow same index to be picked again (i not i+1)
+
 
 def combination_sum(candidates, target):
     result = []
@@ -319,14 +367,16 @@ def combination_sum(candidates, target):
     backtrack(0, [], target)
     return result
 
-print(combination_sum([2, 3, 6, 7], 7))   # [[2,2,3],[7]]
-print(combination_sum([2, 3, 5], 8))       # [[2,2,2,2],[2,3,3],[3,5]]
+
+print(combination_sum([2, 3, 6, 7], 7))  # [[2,2,3],[7]]
+print(combination_sum([2, 3, 5], 8))  # [[2,2,2,2],[2,3,3],[3,5]]
 
 
 # Problem 12: Permutations (LC #46)
 # Difficulty: Medium
 # Approach: backtracking — build permutation by swapping elements
 # Key insight: swap element into current position, recurse, swap back
+
 
 def permutations(nums):
     result = []
@@ -343,7 +393,8 @@ def permutations(nums):
     backtrack(0)
     return result
 
-print(len(permutations([1, 2, 3])))   # 6
+
+print(len(permutations([1, 2, 3])))  # 6
 
 
 # Problem 13: Find Median from Data Stream (LC #295)
@@ -354,10 +405,11 @@ print(len(permutations([1, 2, 3])))   # 6
 
 import heapq
 
+
 class MedianFinder:
     def __init__(self):
-        self.small = []   # max heap (negated) for lower half
-        self.large = []   # min heap for upper half
+        self.small = []  # max heap (negated) for lower half
+        self.large = []  # min heap for upper half
 
     def add_num(self, num):
         heapq.heappush(self.small, -num)
@@ -373,12 +425,13 @@ class MedianFinder:
             return -self.small[0]
         return (-self.small[0] + self.large[0]) / 2
 
+
 mf = MedianFinder()
 mf.add_num(1)
 mf.add_num(2)
-print(mf.find_median())   # 1.5
+print(mf.find_median())  # 1.5
 mf.add_num(3)
-print(mf.find_median())   # 2.0
+print(mf.find_median())  # 2.0
 
 
 # Problem 14: Kth Largest Element in Array (LC #215)
@@ -386,6 +439,7 @@ print(mf.find_median())   # 2.0
 # Approach: min heap of size k — maintain k largest elements seen
 # top of heap is the kth largest
 # Key insight: O(n log k) vs O(n log n) sorting
+
 
 def find_kth_largest(nums, k):
     heap = []
@@ -395,8 +449,9 @@ def find_kth_largest(nums, k):
             heapq.heappop(heap)
     return heap[0]
 
-print(find_kth_largest([3, 2, 1, 5, 6, 4], 2))   # 5
-print(find_kth_largest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4))   # 4
+
+print(find_kth_largest([3, 2, 1, 5, 6, 4], 2))  # 5
+print(find_kth_largest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4))  # 4
 
 
 # Problem 15: Task Scheduler (LC #621)
@@ -407,6 +462,7 @@ print(find_kth_largest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4))   # 4
 
 from collections import Counter
 
+
 def least_interval(tasks, n):
     counts = Counter(tasks)
     max_count = max(counts.values())
@@ -414,8 +470,9 @@ def least_interval(tasks, n):
     result = (max_count - 1) * (n + 1) + tasks_with_max
     return max(result, len(tasks))
 
-print(least_interval(["A","A","A","B","B","B"], 2))   # 8
-print(least_interval(["A","A","A","B","B","B"], 0))   # 6
+
+print(least_interval(["A", "A", "A", "B", "B", "B"], 2))  # 8
+print(least_interval(["A", "A", "A", "B", "B", "B"], 0))  # 6
 
 
 # Problem 16: Unique Paths (LC #62)
@@ -423,15 +480,17 @@ print(least_interval(["A","A","A","B","B","B"], 0))   # 6
 # Approach: DP — paths to cell (i,j) = paths from above + paths from left
 # Key insight: first row and first column all have exactly 1 path
 
+
 def unique_paths(m, n):
     dp = [[1] * n for _ in range(m)]
     for i in range(1, m):
         for j in range(1, n):
-            dp[i][j] = dp[i-1][j] + dp[i][j-1]
-    return dp[m-1][n-1]
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+    return dp[m - 1][n - 1]
 
-print(unique_paths(3, 7))   # 28
-print(unique_paths(3, 2))   # 3
+
+print(unique_paths(3, 7))  # 28
+print(unique_paths(3, 2))  # 3
 
 
 # Problem 17: Jump Game (LC #55)
@@ -439,6 +498,7 @@ print(unique_paths(3, 2))   # 3
 # Approach: greedy — track maximum reachable index as we scan
 # if current index exceeds max reach, we are stuck
 # Key insight: O(n) one pass — no DP needed
+
 
 def can_jump(nums):
     max_reach = 0
@@ -448,8 +508,9 @@ def can_jump(nums):
         max_reach = max(max_reach, i + jump)
     return True
 
-print(can_jump([2, 3, 1, 1, 4]))   # True
-print(can_jump([3, 2, 1, 0, 4]))   # False
+
+print(can_jump([2, 3, 1, 1, 4]))  # True
+print(can_jump([3, 2, 1, 0, 4]))  # False
 
 
 # Problem 18: Longest Increasing Subsequence (LC #300)
@@ -459,6 +520,7 @@ print(can_jump([3, 2, 1, 0, 4]))   # False
 # Key insight: O(n log n) with bisect vs O(n^2) naive DP
 
 import bisect
+
 
 def length_of_lis(nums):
     dp = []
@@ -470,8 +532,9 @@ def length_of_lis(nums):
             dp[pos] = num
     return len(dp)
 
-print(length_of_lis([10, 9, 2, 5, 3, 7, 101, 18]))   # 4
-print(length_of_lis([0, 1, 0, 3, 2, 3]))              # 4
+
+print(length_of_lis([10, 9, 2, 5, 3, 7, 101, 18]))  # 4
+print(length_of_lis([0, 1, 0, 3, 2, 3]))  # 4
 
 
 # Problem 19: Word Break (LC #139)
@@ -480,11 +543,12 @@ print(length_of_lis([0, 1, 0, 3, 2, 3]))              # 4
 # for each position check all possible last words ending there
 # Key insight: build solution from smaller subproblems
 
+
 def word_break(s, wordDict):
     word_set = set(wordDict)
     n = len(s)
     dp = [False] * (n + 1)
-    dp[0] = True   # empty string is always breakable
+    dp[0] = True  # empty string is always breakable
     for i in range(1, n + 1):
         for j in range(i):
             if dp[j] and s[j:i] in word_set:
@@ -492,8 +556,9 @@ def word_break(s, wordDict):
                 break
     return dp[n]
 
-print(word_break("leetcode", ["leet", "code"]))          # True
-print(word_break("applepenapple", ["apple", "pen"]))     # True
+
+print(word_break("leetcode", ["leet", "code"]))  # True
+print(word_break("applepenapple", ["apple", "pen"]))  # True
 print(word_break("catsandog", ["cats", "dog", "sand"]))  # False
 
 
@@ -503,22 +568,24 @@ print(word_break("catsandog", ["cats", "dog", "sand"]))  # False
 # at each position check single digit and two digit decodings
 # Key insight: leading zeros make single digit invalid, check both one and two char
 
+
 def num_decodings(s):
-    if not s or s[0] == '0':
+    if not s or s[0] == "0":
         return 0
     n = len(s)
     dp = [0] * (n + 1)
     dp[0] = 1
     dp[1] = 1
     for i in range(2, n + 1):
-        one_digit = int(s[i-1])
-        two_digit = int(s[i-2:i])
+        one_digit = int(s[i - 1])
+        two_digit = int(s[i - 2 : i])
         if one_digit != 0:
-            dp[i] += dp[i-1]
+            dp[i] += dp[i - 1]
         if 10 <= two_digit <= 26:
-            dp[i] += dp[i-2]
+            dp[i] += dp[i - 2]
     return dp[n]
 
-print(num_decodings("12"))    # 2
-print(num_decodings("226"))   # 3
-print(num_decodings("06"))    # 0
+
+print(num_decodings("12"))  # 2
+print(num_decodings("226"))  # 3
+print(num_decodings("06"))  # 0
